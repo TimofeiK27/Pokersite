@@ -1,0 +1,28 @@
+{% extends "layout.html" %}
+
+{% load static %}
+
+{% block script %}
+<script src="{% static 'index.js' %}"></script>
+{% endblock %}
+
+{% block body %}
+
+  
+  <a href="/{{user.username}}">VIEW STATS</a>
+
+  <h3>Goat List</h3>
+  <ol id="userlist">
+
+  </ol>
+
+ 
+
+  {% if signedIn %}
+    <h5>logged in as : {{user}}</h5>
+    <a href="{% url 'signout' %}">sign out</a>
+  {% else %}
+    <a href="{% url 'signin' %}">LOGIN DIRTY DEGENERATE</a>
+  {% endif %}
+{% endblock %}
+

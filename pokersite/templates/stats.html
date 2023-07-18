@@ -1,0 +1,42 @@
+{% extends "layout.html" %}
+
+{% load static %}
+
+{% block script %}
+    <link rel='stylesheet' href="{% static 'stats.css' %}">
+    <script src="{% static 'stats.js' %}"></script>
+{% endblock %}
+
+{% block body %}
+
+  <h5>logged in as : </h5> <h5 id="user-id">{{user}}</h5>
+
+    <div id="sessionStats">
+        <h2 id="profit">NULL</h2>
+        <h2 id="hours">NULL</h2>
+        <h2 id="sessions">NULL</h2>
+
+    </div>
+    
+
+
+    <h1>Sessions</h1>
+    <div id="addSession">
+        <h1>Add Session</h1>
+        <form action="/{{user}}" method="post">
+            {% csrf_token %}
+            <input autofocus class="sessionInput" type="text" name="net" placeholder="Net Gain/Loss">
+            <input autofocus class="sessionInput" type="text" name="time" placeholder="Time Played (Hours)">
+            <input autofocus class="sessionInput" type="text" name="date" placeholder="Date (Month/Day)">
+            <textarea autofocus id="notesInput" class="sessionInput" type="text" name="notes" placeholder="Notes"></textarea>
+            <input autofocus type="text" name="loggedUser" hidden="true">
+            <input class="addBtnFinal" type="submit" value="Add Session">
+        </form>
+    </div>
+    <button id="addSessionBtn">Add Session</button>
+    <h2 id="targetUser">{{targetUser}}</h2>
+    <div id="previousSessions"></div>
+    
+
+{% endblock %}
+
