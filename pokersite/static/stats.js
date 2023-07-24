@@ -92,6 +92,5 @@ function updateProfit(){
         counter.innerHTML = `Down -$${Math.abs(profit)}`;
         counter.style.color = 'red'
     }    
-    document.getElementById("hours").innerHTML = `Played for ${hours} Hours`;
-    document.getElementById("sessions").innerHTML = `Played ${playedSessions} Sessions`;
+    document.getElementById("hours").innerHTML = `Played for ${hours} Hours over ${playedSessions} Sessions`;
 }
