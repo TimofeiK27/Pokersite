@@ -126,3 +126,6 @@ def reStat(username):
     user.sessions = sessions
     user.save()
     return profit
+
+def variance(request):
+    return render(request, "variance.html")
