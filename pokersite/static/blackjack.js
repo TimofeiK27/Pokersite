@@ -1,6 +1,19 @@
 suites = ['S','H','D','C'];
 deck = [];
 decks = 1;
+
+hands = []
+
+const hand = {
+    value: 0,
+    soft: false,
+    live: true,
+
+}
+
+const ww = Object.create(hand);
+
+
 var soft;
 var count;
 funds = 100;
@@ -27,12 +40,20 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('functions').innerHTML = "Choose Bet";
     document.getElementById('deal').addEventListener('click',()=>{
         bet = parseInt(document.getElementById('bet-amount').value);
+        if (bet >= 0 && bet <= funds){
         
-        document.getElementById('functions').innerHTML = `<button id="stand-btn"> STAND </button> <button id="hit-btn"> HIT </button> <button id="double-btn"> DOUBLE </button>`;
-        setPlayerCards();
-        document.getElementById('hit-btn').addEventListener('click', hit);
-        document.getElementById('stand-btn').addEventListener('click', stand);
-        document.getElementById('double-btn').addEventListener('click', double);
+            document.getElementById('functions').innerHTML = `<button id="stand-btn"> STAND </button> <button id="hit-btn"> HIT </button> <button id="double-btn"> DOUBLE </button>`;
+            setPlayerCards();
+            document.getElementById('hit-btn').addEventListener('click', hit);
+            document.getElementById('stand-btn').addEventListener('click', stand);
+
+            doublebtn = document.getElementById('double-btn');
+
+            bet * 2 <= funds ? doublebtn.addEventListener('click', double) :  doublebtn.style.background = 'darkgray';
+
+            document.getElementById('fund-counter').innerHTML = `${funds - bet} funds`;
+            document.getElementById('deal').hidden = true;
+        }
     });
 
 })
@@ -41,7 +62,7 @@ function selectCard() {
     card = deck[Math.floor((deck.length-1) * Math.random())];
     index = deck.indexOf(card)
     deck.splice(index,1);
-
+    console.log(card);
     return card;
 }
 
@@ -88,7 +109,7 @@ function setPlayerCards() {
     card1val = parse10s(card1);
     card2val = parse10s(card2);
 
-    card1val == 1 || card2val ==1 ? soft = true : soft = false;
+    card1val == 1 || card2val == 1 ? soft = true : soft = false;
 
 
     count = card1val + card2val;  
@@ -113,6 +134,8 @@ function setPlayerCards() {
 }
 
 function hit() {
+    document.getElementById('double-btn').hidden = 'true';
+
     newCard = document.createElement('div');
     newCard.className = 'card-slot';
 
@@ -216,28 +239,35 @@ function testWin(){
 }
 
 function reset() {
-    document.getElementById('reshuffle').innerHTML = "";
-    soft = false;
-    count = 0;
-    dealerUpCard = selectCard();
-    dealerCount = 0;
-    dealerSoft = false;
+    bet = parseInt(document.getElementById('bet-amount').value);
+    if (bet >= 0 && bet <= funds){
+        
+        document.getElementById('reshuffle').innerHTML = "";
+        soft = false;
+        count = 0;
+        dealerUpCard = selectCard();
+        dealerCount = 0;
+        dealerSoft = false;
 
-    if (deck.length < 12){
-        deck = [];
-        shuffle();
-        document.getElementById('reshuffle').innerHTML = "Reshuffled Deck!"
+        if (deck.length < 12){
+            deck = [];
+            shuffle();
+            document.getElementById('reshuffle').innerHTML = "Reshuffled Deck!"
+        }
+        
+
+        document.getElementById('dealer-card1').innerHTML = `<image class="cardimg" src="/static/media/${dealerUpCard}.jpg">`;  
+        document.getElementById('dealer-card2').innerHTML = `<image class="cardimg" src="/static/media/down.jpg">`; 
+
+        document.getElementById('functions').innerHTML = `<button id="stand-btn"> STAND </button> <button id="hit-btn"> HIT </button> <button id="double-btn"> DOUBLE </button>`;
+
+        document.getElementById('hit-btn').addEventListener('click', hit);
+        document.getElementById('stand-btn').addEventListener('click', stand)
+        doublebtn = document.getElementById('double-btn');
+        bet * 2 <= funds ? doublebtn.addEventListener('click', double) :  doublebtn.style.background = 'darkgray';
+
+        setPlayerCards();
     }
-    setPlayerCards();
-
-    document.getElementById('dealer-card1').innerHTML = `<image class="cardimg" src="/static/media/${dealerUpCard}.jpg">`;  
-    document.getElementById('dealer-card2').innerHTML = `<image class="cardimg" src="/static/media/down.jpg">`; 
-
-    document.getElementById('functions').innerHTML = `<button id="stand-btn"> STAND </button> <button id="hit-btn"> HIT </button> <button id="double-btn"> DOUBLE </button>`;
-
-    document.getElementById('hit-btn').addEventListener('click', hit);
-    document.getElementById('stand-btn').addEventListener('click', stand)
-    document.getElementById('double-btn').addEventListener('click', double);
 }
 
 function fund(amount) {
