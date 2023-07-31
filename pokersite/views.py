@@ -28,6 +28,7 @@ def stats(request,username):
         net = request.POST["net"]
         time = request.POST["time"]
         date = request.POST["date"]
+        print(date)
         notes = request.POST["notes"]
         try:
             session = Session(
@@ -129,3 +130,7 @@ def reStat(username):
 
 def variance(request):
     return render(request, "variance.html")
+
+
+def blackjack(request):
+    return render(request, "blackjack.html")

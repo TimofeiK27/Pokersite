@@ -1,0 +1,36 @@
+{% load static %}
+<link rel='stylesheet' href="{% static 'blackjack.css' %}">
+<script src="{% static 'blackjack.js' %}"></script>
+
+<h2 id="fund-counter">100 funds</h2>
+<input id="bet-amount" type="number" placeholder="Bet Amount"></input>
+<button id="deal">Deal</button>
+<h1 id="player-count">count</h1>
+<div id="player-cards">
+    <div class="card-slot" id="player-card1">
+      
+    </div>
+    <div class="card-slot" id="player-card2">
+     
+    </div>
+</div>
+<div id="player-count2"></div>
+
+<div id="functions">
+    <button id="stand-btn"> STAND </button>
+    <button id="hit-btn"> HIT </button>
+</div>
+
+<h1 id="dealer-count">Dealer</h1>
+<div id="dealer-cards">
+    <div class="card-slot" id="dealer-card1">
+      
+    </div>
+    <div class="card-slot" id="dealer-card2">
+     
+    </div>
+
+</div>
+
+<h2 id="reshuffle"></h2>
+

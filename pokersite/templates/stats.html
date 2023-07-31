@@ -23,7 +23,7 @@
             {% csrf_token %}
             <input autofocus class="sessionInput" type="text" name="net" placeholder="Net Gain/Loss">
             <input autofocus class="sessionInput" type="text" name="time" placeholder="Time Played (Hours)">
-            <input autofocus class="sessionInput" type="text" name="date" placeholder="Date (Month/Day)">
+            <input autofocus class="sessionInput" type="date" name="date">
             <textarea autofocus id="notesInput" class="sessionInput" type="text" name="notes" placeholder="Notes"></textarea>
             <input autofocus type="text" name="loggedUser" hidden="true">
             <input class="addBtnFinal" type="submit" value="Add Session">
