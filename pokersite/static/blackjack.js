@@ -5,20 +5,102 @@ decks = 1;
 hands = []
 
 const hand = {
-    value: 0,
+    count: 0,
     soft: false,
     live: true,
 
+    hit() {
+        console.log(this);
+        console.log(this.count);
+        document.getElementById('double-btn').hidden = 'true';
+    
+        newCard = document.createElement('div');
+        newCard.className = 'card-slot';
+    
+        newCardVal = selectCard();
+        console.log(this.count);
+        newCard.innerHTML = `<image class="cardimg" src="/static/media/${newCardVal}.jpg">`;
+    
+        parseInt(newCardVal.substring(0,2)) > 10 ?  newCardVal = 10 :  newCardVal = parseInt(newCardVal.substring(0,2));
+        this.count += newCardVal;
+    
+        if(newCardVal = 1)
+            this.soft = true;
+    
+        if(this.count > 10)
+            this.soft = false;
+        if(this.count > 21){
+            document.getElementById('functions').innerHTML = "BUST!";
+            document.getElementById('functions').innerHTML += '<button id="reset-btn">RESET</button>';
+    
+            fund(bet * -1);
+    
+            document.getElementById('reset-btn').addEventListener('click', reset);
+        }    
+    
+        this.soft ? document.getElementById('player-count').innerHTML = `Soft ${this.count + 10}` : document.getElementById('player-count').innerHTML = `Hard ${this.count}`;   
+        playerCards.append(newCard);
+    
+    },
+
+    stand() {
+        if(this.soft){
+            this.count+=10;
+        }
+    
+        document.getElementById('dealer-card2').remove();
+        dealerCards = document.getElementById('dealer-cards');
+        dealerUpCard = parse10s(dealerUpCard);
+        dealerCount = dealerUpCard;
+        
+        
+        downCard = selectCard();
+        newCard = document.createElement('div');
+        newCard.className = 'card-slot';
+        newCard.innerHTML = `<image class="cardimg" src="/static/media/${downCard}.jpg">`;
+        newCard.id = 'dealer-card2';
+        dealerCards.append(newCard);
+        downCard = parse10s(downCard)
+        dealerCount += downCard;
+    
+        dealerUpCard == 1 || downCard == 1? dealerSoft = true : dealerSoft = false;
+        while(testWin()) {
+            newCard = document.createElement('div');
+            newCard.className = 'card-slot';
+            dealerHit = selectCard();
+            newCard.innerHTML = `<image class="cardimg" src="/static/media/${dealerHit}.jpg">`;;
+            dealerCards.append(newCard);
+            dealerHit = parse10s(dealerHit);
+            dealerCount += dealerHit;
+            if(dealerHit == 1 && dealerCount <= 10) 
+                dealerSoft = true
+            
+            if(dealerCount > 10)
+                dealerSoft = false;
+        };
+    
+    },
+
+    double(){
+        doubleD = true;
+        console.log(doubleD);
+    
+        hands[0].hit();
+        if (this.count <= 21)
+            stand();
+    },
+    
+    split() {
+        console.log(22)
+    }
 }
 
-const ww = Object.create(hand);
 
 
-var soft;
-var count;
 funds = 100;
 bet = 0;
 doubleD = false;
+
 function shuffle() {
     suites.forEach((suite) => {
         for(a = 0; a < decks; a++){
@@ -33,6 +115,7 @@ function shuffle() {
 }
 
 
+
 shuffle();
 dealerUpCard = selectCard();
 
@@ -41,15 +124,16 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('deal').addEventListener('click',()=>{
         bet = parseInt(document.getElementById('bet-amount').value);
         if (bet >= 0 && bet <= funds){
-        
+            
             document.getElementById('functions').innerHTML = `<button id="stand-btn"> STAND </button> <button id="hit-btn"> HIT </button> <button id="double-btn"> DOUBLE </button>`;
             setPlayerCards();
-            document.getElementById('hit-btn').addEventListener('click', hit);
-            document.getElementById('stand-btn').addEventListener('click', stand);
+            console.log(hands[0]);
+            document.getElementById('hit-btn').addEventListener('click', () => hands[0].hit());
+            document.getElementById('stand-btn').addEventListener('click', () => hands[0].stand());
 
             doublebtn = document.getElementById('double-btn');
 
-            bet * 2 <= funds ? doublebtn.addEventListener('click', double) :  doublebtn.style.background = 'darkgray';
+            bet * 2 <= funds ? doublebtn.addEventListener('click', () => hands[0].double()) :  doublebtn.style.background = 'darkgray';
 
             document.getElementById('fund-counter').innerHTML = `${funds - bet} funds`;
             document.getElementById('deal').hidden = true;
@@ -109,100 +193,37 @@ function setPlayerCards() {
     card1val = parse10s(card1);
     card2val = parse10s(card2);
 
-    card1val == 1 || card2val == 1 ? soft = true : soft = false;
+    const hand1 = Object.create(hand);
+    card1val == 1 || card2val == 1 ? hand1.soft = true : hand1.soft = false;
 
+ 
 
-    count = card1val + card2val;  
+    hand1.count = card1val + card2val;  
 
 
     playerCard1.innerHTML = `<image class="cardimg" src="/static/media/${card1}.jpg">`;
     playerCard2.innerHTML = `<image class="cardimg" src="/static/media/${card2}.jpg">`;
 
-    soft ? document.getElementById('player-count').innerHTML = `Soft ${count + 10}` : document.getElementById('player-count').innerHTML = `Hard ${count}`;
+    hand1.soft ? document.getElementById('player-count').innerHTML = `Soft ${hand1.count + 10}` : document.getElementById('player-count').innerHTML = `Hard ${hand1.count}`;
 
-    console.log(card1val);
-    console.log(card2val);
     if(card1val == card2val){
         btn = document.createElement('button');
         btn.innerHTML = "- SPLIT -";
         btn.id = "split-btn";
         document.getElementById('functions').append(btn);
 
-        document.getElementById("split-btn").addEventListener('click', split);
+       // document.getElementById("split-btn").addEventListener('click', ()=> cards[0].split());
         console.log("SPLIT");
     }
+    console.log("waawaw");
+    hands.push(hand1);
 }
 
-function hit() {
-    document.getElementById('double-btn').hidden = 'true';
 
-    newCard = document.createElement('div');
-    newCard.className = 'card-slot';
-
-    newCardVal = selectCard();
-    newCard.innerHTML = `<image class="cardimg" src="/static/media/${newCardVal}.jpg">`;
-
-    parseInt(newCardVal.substring(0,2)) > 10 ?  newCardVal = 10 :  newCardVal = parseInt(newCardVal.substring(0,2));
-    count += newCardVal;
-
-    if(newCardVal = 1)
-        soft = true;
-
-    if(count > 10)
-        soft = false;
-    if(count > 21){
-        document.getElementById('functions').innerHTML = "BUST!";
-        document.getElementById('functions').innerHTML += '<button id="reset-btn">RESET</button>';
-
-        fund(bet * -1);
-
-        document.getElementById('reset-btn').addEventListener('click', reset);
-    }    
-
-    soft ? document.getElementById('player-count').innerHTML = `Soft ${count + 10}` : document.getElementById('player-count').innerHTML = `Hard ${count}`;   
-    playerCards.append(newCard);
-
-}
 
 var dealerSoft;
 var dealerCount;
-function stand() {
-    if(soft){
-        count+=10;
-    }
 
-    document.getElementById('dealer-card2').remove();
-    dealerCards = document.getElementById('dealer-cards');
-    dealerUpCard = parse10s(dealerUpCard);
-    dealerCount = dealerUpCard;
-    
-    
-    downCard = selectCard();
-    newCard = document.createElement('div');
-    newCard.className = 'card-slot';
-    newCard.innerHTML = `<image class="cardimg" src="/static/media/${downCard}.jpg">`;
-    newCard.id = 'dealer-card2';
-    dealerCards.append(newCard);
-    downCard = parse10s(downCard)
-    dealerCount += downCard;
-
-    dealerUpCard == 1 || downCard == 1? dealerSoft = true : dealerSoft = false;
-    while(testWin()) {
-        newCard = document.createElement('div');
-        newCard.className = 'card-slot';
-        dealerHit = selectCard();
-        newCard.innerHTML = `<image class="cardimg" src="/static/media/${dealerHit}.jpg">`;;
-        dealerCards.append(newCard);
-        dealerHit = parse10s(dealerHit);
-        dealerCount += dealerHit;
-        if(dealerHit == 1 && dealerCount <= 10) 
-            dealerSoft = true
-        
-        if(dealerCount > 10)
-            dealerSoft = false;
-    };
-
-}
 
 function parse10s(card) {
     parseInt(card.substring(0,2)) > 10 ?  card = 10 :  card = parseInt(card.substring(0,2));
@@ -221,10 +242,10 @@ function testWin(){
     if((!dealerSoft && dealerCount >= 17) || (dealerSoft && dealerCount+10 >17)) {
         if(dealerSoft)
             dealerCount+=10;
-       if(count > dealerCount){
+       if(hands[0].count > dealerCount){
             document.getElementById('functions').innerHTML = "Player Wins! ";
             fund(bet);
-       } else if (count < dealerCount){
+       } else if (hands[0].count < dealerCount){
             document.getElementById('functions').innerHTML = "Dealer Wins! ";
             fund(bet*-1);
        } else {
@@ -239,12 +260,14 @@ function testWin(){
 }
 
 function reset() {
+    temp = [];
+    hands = temp;
+    console.log(hands);
+    console.log('amount of hands');
     bet = parseInt(document.getElementById('bet-amount').value);
     if (bet >= 0 && bet <= funds){
         
         document.getElementById('reshuffle').innerHTML = "";
-        soft = false;
-        count = 0;
         dealerUpCard = selectCard();
         dealerCount = 0;
         dealerSoft = false;
@@ -261,10 +284,10 @@ function reset() {
 
         document.getElementById('functions').innerHTML = `<button id="stand-btn"> STAND </button> <button id="hit-btn"> HIT </button> <button id="double-btn"> DOUBLE </button>`;
 
-        document.getElementById('hit-btn').addEventListener('click', hit);
-        document.getElementById('stand-btn').addEventListener('click', stand)
+        document.getElementById('hit-btn').addEventListener('click', ()=> hand.hit());
+        document.getElementById('stand-btn').addEventListener('click', ()=> hand.stand())
         doublebtn = document.getElementById('double-btn');
-        bet * 2 <= funds ? doublebtn.addEventListener('click', double) :  doublebtn.style.background = 'darkgray';
+        bet * 2 <= funds ? doublebtn.addEventListener('click', ()=> hand.double()) :  doublebtn.style.background = 'darkgray';
 
         setPlayerCards();
     }
@@ -278,15 +301,3 @@ function fund(amount) {
 
 }
 
-function double(){
-    doubleD = true;
-    console.log(doubleD);
-
-    hit();
-    if (count <= 21)
-        stand();
-}
-
-function split() {
-    console.log(22)
-}
