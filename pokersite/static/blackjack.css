@@ -1,4 +1,4 @@
-#player-cards1{
+.player-cards{
     display:flex;
     flex-wrap:wrap;
 }
