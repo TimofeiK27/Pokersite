@@ -22,8 +22,8 @@ const hand = {
         newCard = document.createElement('div');
         newCard.className = 'card-slot';
     
-        //newCardVal = selectCard();
-        newCardVal = '04S'
+        newCardVal = selectCard();
+        //newCardVal = '04S'
         newCard.innerHTML = `<image class="cardimg" src="/static/media/${newCardVal}.jpg">`;
         console.log(newCardVal);
         newCardVal = parse10s(newCardVal);
@@ -234,8 +234,8 @@ function setPlayerCards() {
     card1 = selectCard();
     card2 = selectCard();
     
-    card1 = "04H";
-    card2 = "04S";
+    //card1 = "04H";
+    //card2 = "04S";
 
     card1val = parse10s(card1);
     card2val = parse10s(card2);

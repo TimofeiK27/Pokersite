@@ -10,7 +10,7 @@ urlpatterns = [
     path("variance", views.variance, name="variance"),
 
     path("blackjack", views.blackjack, name="blackjack"),
-    
+    path("poker", views.poker, name="poker"),
 
     path("sessions/<str:username>", views.sessions, name="sessions"),
     path("users", views.users, name="users"),

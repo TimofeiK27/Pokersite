@@ -134,3 +134,6 @@ def variance(request):
 
 def blackjack(request):
     return render(request, "blackjack.html")
+
+def poker(request):
+    return render(request, "poker.html")
