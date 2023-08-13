@@ -1,0 +1,83 @@
+
+.home-container {
+    width: 100%;
+    display: flex;
+    overflow: auto;
+    min-height: 100vh;
+    align-items: center;
+    flex-direction: column;
+    justify-content: flex-end;
+  }
+
+  
+ #table {
+    width: 200px;
+    object-fit: cover;
+    top: 200px;
+    left: 30px;
+    width:430px;
+    height:250px;
+    position: absolute;
+  }
+
+
+
+
+.action-btn {
+
+    width: 156px;
+    height: 61px;
+    position: absolute;
+}
+#fold-btn{
+  top: 790px;
+  left: 68px;
+}
+#call-btn{
+  top: 791px;
+  left: 273px;
+}
+  
+#flop-card1{
+  top: 30px;
+  left: 17px;
+}
+#flop-card2{
+  top: 31px;
+  left: 109px;
+}
+#flop-card3{
+  top: 30px;
+  left: 205px;
+}
+#flop-card4{
+  top: 31px;
+  left: 298px;
+}
+#flop-card5{
+  top: 31px;
+  left: 400px;
+}
+.community-cards{
+  width: 80px;
+  height: 112px;
+  position: absolute;
+}
+.hole-cards{
+  width: 160px;
+  height: 224px;
+  position: absolute;
+  padding-bottom: 0px;
+}
+
+#player-card2 {
+  left: 65px;
+  top: 553px;
+
+}
+
+#player-card1 {
+  top: 553px;
+  left: 275px;
+
+}
