@@ -19,7 +19,16 @@
     height:250px;
     position: absolute;
   }
-
+  #hand-description {
+    width: 200px;
+    object-fit: cover;
+    top: 280px;
+    left: 160px;
+    width:430px;
+    height:250px;
+    position: absolute;
+    color:white;
+  }
 
 
 
