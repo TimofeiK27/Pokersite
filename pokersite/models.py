@@ -30,3 +30,12 @@ class Session(models.Model):
 			"hours": self.hours,
 			"notes": self.notes,
 		}
+	
+#class Table(models.Model):
+#	seat1 = models.ForeignKey("User", on_delete=models.CASCADE, related_name="user")
+#	seat2 = models.ForeignKey("User", on_delete=models.CASCADE, related_name="user")
+#	seat3 = models.ForeignKey("User", on_delete=models.CASCADE, related_name="user")
+#	seat4 = models.ForeignKey("User", on_delete=models.CASCADE, related_name="user")
+#	seat5 = models.ForeignKey("User", on_delete=models.CASCADE, related_name="user")
+#	seat6 = models.ForeignKey("User", on_delete=models.CASCADE, related_name="user")
+	

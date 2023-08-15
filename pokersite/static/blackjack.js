@@ -4,6 +4,9 @@ decks = 1;
 
 hands = [];
 
+active = [1,2,3,4];
+dealer = 1;
+
 activeHand = 1;
 const hand = {
     count: 0,

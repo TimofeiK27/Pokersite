@@ -9,12 +9,17 @@
     justify-content: flex-end;
   }
 
+  #table-container{
+    top: 200px;
+    left: 30px;
+    width: 60px;
+    height: 30px;
+    position: absolute;
+  }
   
  #table {
     width: 200px;
     object-fit: cover;
-    top: 200px;
-    left: 30px;
     width:430px;
     height:250px;
     position: absolute;
@@ -30,8 +35,54 @@
     color:white;
   }
 
+.player-slot{
+  border:1px solid black;
+  width: 60px;
+  height: 30px;
+  position: absolute;
+  background-color:aqua;
+}
+
+#player-slot1{
+  top: 10px;
+  left: 260px;
+
+}
+#player-slot2{
+  top: 195px;
+  left: 260px;
+
+}
+#player-slot3{
+  top: 195px;
+  left: 100px;
+
+}
+#player-slot4{
 
 
+  top: 10px;
+  left: 100px;
+}
+
+.btn{
+  border:1px solid black;
+  width: 12px;
+  height: 12px;
+  position: absolute;
+  
+  font-size:10px;
+}
+#dealer-btn{
+  background-color:white;
+}
+#small-btn{
+  background-color:purple;
+  color:white;
+}
+#big-btn{
+  background-color:yellow;
+}
 .action-btn {
 
     width: 156px;
